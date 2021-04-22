@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from .models import Flight, Airport, Passenger
+from django.db.models import Max
 
 # Create your tests here.
 class FlightTestCase(TestCase):
