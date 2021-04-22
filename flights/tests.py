@@ -72,7 +72,7 @@ class FlightTestCase(TestCase):
     # make sure the passengers and non-passengers lists are being generated as expected
     def test_flight_page_passengers(self):
         f = Flight.object.get(pk=1)
-        p = Passenger.objects.create(first="Alice", last="Adams")
+        p = Passenger.objects.create(first_name="Alice", last_name="Adams")
         f.passengers.add(p)
 
         c = Client()
@@ -82,7 +82,7 @@ class FlightTestCase(TestCase):
     
     def test_flight_page_non_passengers(self):
         f = Flight.objects.get(pk=1)
-        p = Passenger.objects.create(first="Alice", last="Adams")
+        p = Passenger.objects.create(first_name="Alice", last_name="Adams")
 
         c = Client()
         response = c.get(f"/flights/{f.id}")
