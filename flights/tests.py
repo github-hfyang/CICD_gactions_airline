@@ -50,7 +50,7 @@ class FlightTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # make sure three flights are returned in the context
-        self.assertEqual(response)
+        self.assertEqual(response.context["flights"].count(), 3)
     
     # make sure we get a valid response code for a valid flight page
     def test_valid_flight_page(self):
@@ -71,7 +71,7 @@ class FlightTestCase(TestCase):
     
     # make sure the passengers and non-passengers lists are being generated as expected
     def test_flight_page_passengers(self):
-        f = Flight.object.get(pk=1)
+        f = Flight.objects.get(pk=1)
         p = Passenger.objects.create(first_name="Alice", last_name="Adams")
         f.passengers.add(p)
 
