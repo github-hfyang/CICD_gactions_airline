@@ -65,6 +65,7 @@ class FlightTestCase(TestCase):
     # make sure we get an invalid response code for a flight page that doesn't exist
     def test_invalid_flight_page(self):
         max_id = Flight.objects.all().aggregate(Max("id"))["id__max"]
+        print("max_id", max_id)
 
         c = Client()
         response = c.get(f"/flights/{max_id + 1}")
