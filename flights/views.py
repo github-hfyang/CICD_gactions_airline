@@ -19,7 +19,14 @@ def flight(request, flight_id):
 
 def book(request, flight_id):
     if request.method == "POST":
-        flight = Flight.objects.get(pk=flight_id)
-        passenger = Passenger.objects.get(pk=int(request.POST["passenger"]))
+        try:
+            flight = Flight.objects.get(pk=flight_id)
+            passenger = Passenger.objects.get(pk=int(request.POST["passenger"]))
+        except KeyError:
+            return HttpResponseBadRequest("Bad Request: no flight chosen")
+        except Flight.DoesNotExist:
+            return HttpResponseBadRequest("Bad Request: flight does not exist")
+        except Passenger.DoesNotExist:
+            return HttpResponseBadRequest("Bad Request: passenger does not exist")
         passenger.flights.add(flight)
-        return HttpResponseRedirect(reverse("flight", args=(flight.id,)))
+        return HttpResponseRedirect(reverse("flights:flight", args=(flight.id,)))
