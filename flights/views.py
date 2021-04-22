@@ -10,7 +10,10 @@ def index(request):
     })
 
 def flight(request, flight_id):
-    flight = Flight.objects.get(pk=flight_id)
+    try:
+        flight = Flight.objects.get(pk=flight_id)
+    except Flight.DoesNotExist:
+        raise Http404("Flight not found.")
     return render(request, "flights/flight.html", {
         "flight": flight,
         "passengers": flight.passengers.all(),
